@@ -1,10 +1,47 @@
 name: BilicubeWarp
-description: $description
+description: Bilicube Landmark Teleport System
 prefix: Bilicube
 version: '${version}'
 
 main: com.bilicube.bilicubeWarp.BilicubeWarp
 api-version: '1.21.11'
-load: STARTUP
+load: POSTWORLD
 
 authors: [ Bilicube ]
+
+commands:
+  warp:
+    description: Bilicube Landmark Teleport
+    permission: warp.use
+
+permissions:
+  warp.use:
+    description: Use /warp base command
+    default: true
+  warp.menu:
+    description: Open landmark menu GUI
+    default: true
+  warp.list:
+    description: List all landmarks
+    default: true
+  warp.info:
+    description: View landmark details
+    default: true
+  warp.tp.sign:
+    description: Teleport via right-clicking a sign
+    default: true
+  warp.tp.menu:
+    description: Teleport via menu left-click
+    default: true
+  warp.tp:
+    description: Teleport via /warp tp command
+    default: op
+  warp.admin:
+    description: Manage landmark system
+    default: op
+    children:
+      warp.tp: true
+      warp.tp.menu: true
+  "warp.landmark.*":
+    description: Manage specific landmark (auto-granted to owner/admin)
+    default: false
