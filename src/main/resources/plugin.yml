@@ -20,7 +20,7 @@ permissions:
     default: true
   warp.menu:
     description: Open landmark menu GUI
-    default: true
+    default: op
   warp.list:
     description: List all landmarks
     default: true
