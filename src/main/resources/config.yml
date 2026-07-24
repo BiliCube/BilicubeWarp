@@ -1,0 +1,29 @@
+settings:
+  # 传送倒计时（秒）
+  teleport-delay-seconds: 3
+  # 倒计时期间移动是否取消传送
+  teleport-move-cancels: true
+  # 每位玩家最多可拥有的地标数
+  max-landmarks-per-player: 3
+
+messages:
+  prefix: "&2&l地标 &8| &7"
+  teleport-start: "&e传送中，请勿移动... (&7{seconds}秒&e)"
+  teleport-cancelled: "&c传送被取消 - 你移动了"
+  teleport-complete: "&a欢迎来到 &e{name}"
+  landmark-not-found: "&c地标 &e{name}&c 不存在"
+  no-permission: "&c你没有权限执行此操作"
+  player-only: "&c此命令只能由玩家执行"
+  landmark-created: "&a地标 &e{name}&a 创建成功！（等级：{level}）"
+  landmark-removed: "&a地标 &e{name}&a 已删除"
+  landmark-level-changed: "&a地标 &e{name}&a 等级已修改为 &e{level}"
+  welcome-set: "&a地标 &e{name}&a 第 {line} 行欢迎语已设置"
+  sign-created: "&a传送牌已创建，指向地标 &e{name}"
+  sign-removed: "&a传送牌已移除"
+  sign-already-exists: "&c此位置已有传送牌"
+  no-sign-target: "&c请看着一个木牌"
+  landmark-exists: "&c地标 &e{name}&c 已存在"
+  invalid-level: "&c无效等级，可选：萤火, 灯塔, 晨星, 极光"
+  config-reloaded: "&a配置已重新加载"
+  help-header: "&b===== Bilicube地标传送 =====&r"
+  help-item: "&e/warp {cmd} &7- {desc}"

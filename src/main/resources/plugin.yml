@@ -1,0 +1,10 @@
+name: BilicubeWarp
+description: $description
+prefix: Bilicube
+version: '${version}'
+
+main: com.bilicube.bilicubeWarp.BilicubeWarp
+api-version: '1.21.11'
+load: STARTUP
+
+authors: [ Bilicube ]
