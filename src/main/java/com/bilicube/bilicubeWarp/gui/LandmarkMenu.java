@@ -141,6 +141,7 @@ public class LandmarkMenu {
             for (int i = 0; i < n; i++) lore.add(MessageUtil.component("&f" + w.get(i)));
             if (w.size() > MAX_DESC_LINES)
                 lore.add(MessageUtil.component("&8... 更多 /warp info"));
+            lore.add(Component.empty());
         }
 
         Location loc = l.getLocation();

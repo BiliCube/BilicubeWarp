@@ -46,6 +46,17 @@ public class SignManager {
         return Collections.unmodifiableCollection(byId.values());
     }
 
+    public List<Location> getLocationsForLandmark(UUID landmarkId) {
+        List<Location> list = new ArrayList<>();
+        for (TeleportSignData sd : byId.values()) {
+            if (sd.getLandmarkId().equals(landmarkId)) {
+                Location loc = sd.getLocation();
+                if (loc != null) list.add(loc);
+            }
+        }
+        return list;
+    }
+
     public void removeAllForLandmark(UUID landmarkId) {
         List<String> toRemove = new ArrayList<>();
         for (Map.Entry<String, TeleportSignData> e : byLocation.entrySet()) {

@@ -208,6 +208,12 @@ public class WarpCommand implements CommandExecutor {
         StringBuilder sb = new StringBuilder(a[3]);
         for (int i = 4; i < a.length; i++) sb.append(" ").append(a[i]);
         this.lm.setDisplayName(lm.getName(), sb.toString());
+        for (Location signLoc : sm.getLocationsForLandmark(lm.getId())) {
+            if (signLoc.getBlock().getState() instanceof Sign sign) {
+                sign.getSide(org.bukkit.block.sign.Side.FRONT).line(2, component("&e" + lm.getDisplayName()));
+                sign.update();
+            }
+        }
         raw(s, "&a显示名已更新");
         return true;
     }
@@ -354,6 +360,9 @@ public class WarpCommand implements CommandExecutor {
     private boolean reload(CommandSender s) {
         if (!hasPerm(s, "warp.admin")) return true;
         cfg.reload();
+        lm.load();
+        sm.load();
+        if (s instanceof Player p) plugin.refreshAllLandmarkPermissions(p);
         msg(s, "config-reloaded");
         return true;
     }
