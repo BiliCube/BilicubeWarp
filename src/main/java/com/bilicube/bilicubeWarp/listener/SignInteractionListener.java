@@ -7,6 +7,7 @@ import com.bilicube.bilicubeWarp.model.Landmark;
 import com.bilicube.bilicubeWarp.model.TeleportSignData;
 import com.bilicube.bilicubeWarp.task.TeleportTask;
 import com.bilicube.bilicubeWarp.util.MessageUtil;
+import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,14 +51,32 @@ public class SignInteractionListener implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
-        if (!(e.getBlock().getState() instanceof Sign)) return;
-        if (sm.get(e.getBlock().getLocation()) == null) return;
+        Location broken = e.getBlock().getLocation();
 
-        if (!e.getPlayer().hasPermission("warp.admin")) {
-            e.setCancelled(true);
-            e.getPlayer().sendActionBar(MessageUtil.component("&c你不能破坏传送牌"));
+        if (e.getBlock().getState() instanceof Sign && sm.get(broken) != null) {
+            if (!e.getPlayer().hasPermission("warp.admin")) {
+                e.setCancelled(true);
+                e.getPlayer().sendActionBar(MessageUtil.component("&c你不能破坏传送牌"));
+                return;
+            }
+            sm.remove(broken);
             return;
         }
-        sm.remove(e.getBlock().getLocation());
+
+        for (TeleportSignData sd : sm.all()) {
+            Location sl = sd.getLocation();
+            if (sl == null || !sl.getWorld().equals(broken.getWorld())) continue;
+            int dx = Math.abs(sl.getBlockX() - broken.getBlockX());
+            int dy = Math.abs(sl.getBlockY() - broken.getBlockY());
+            int dz = Math.abs(sl.getBlockZ() - broken.getBlockZ());
+            if (dx + dy + dz == 1) {
+                if (!e.getPlayer().hasPermission("warp.admin")) {
+                    e.setCancelled(true);
+                    e.getPlayer().sendActionBar(MessageUtil.component("&c你不能破坏传送牌的附着方块"));
+                    return;
+                }
+                sm.remove(sl);
+            }
+        }
     }
 }
