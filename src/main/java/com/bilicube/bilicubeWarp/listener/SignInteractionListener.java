@@ -9,6 +9,7 @@ import com.bilicube.bilicubeWarp.task.TeleportTask;
 import com.bilicube.bilicubeWarp.util.MessageUtil;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.type.WallSign;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -66,10 +67,8 @@ public class SignInteractionListener implements Listener {
         for (TeleportSignData sd : sm.all()) {
             Location sl = sd.getLocation();
             if (sl == null || !sl.getWorld().equals(broken.getWorld())) continue;
-            int dx = Math.abs(sl.getBlockX() - broken.getBlockX());
-            int dy = Math.abs(sl.getBlockY() - broken.getBlockY());
-            int dz = Math.abs(sl.getBlockZ() - broken.getBlockZ());
-            if (dx + dy + dz == 1) {
+            Location support = getSupport(sl);
+            if (support != null && support.equals(broken)) {
                 if (!e.getPlayer().hasPermission("warp.admin")) {
                     e.setCancelled(true);
                     e.getPlayer().sendActionBar(MessageUtil.component("&c你不能破坏传送牌的附着方块"));
@@ -78,5 +77,12 @@ public class SignInteractionListener implements Listener {
                 sm.remove(sl);
             }
         }
+    }
+
+    private Location getSupport(Location signLoc) {
+        if (!(signLoc.getBlock().getState() instanceof Sign)) return null;
+        if (signLoc.getBlock().getBlockData() instanceof WallSign ws)
+            return signLoc.clone().add(ws.getFacing().getOppositeFace().getDirection());
+        return signLoc.clone().subtract(0, 1, 0);
     }
 }
